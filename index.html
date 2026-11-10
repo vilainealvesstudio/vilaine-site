@@ -16,7 +16,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -74,7 +74,7 @@
     }
 
     /* =========================================================
-       ABERTURA DE IMPACTO COM LOGO ANIMADA (SVG + CASCA DE LETRAS)
+       ABERTURA DE IMPACTO: MONOGRAMA UNIFICADO VA CONTÍNUO
        ========================================================= */
     #splash-screen {
       position: fixed;
@@ -103,7 +103,6 @@
       padding: 24px;
     }
 
-    /* MONOGRAMA VETORIAL ANIMADO */
     .monogram-svg-wrap {
       width: clamp(140px, 24vw, 190px);
       aspect-ratio: 1 / 1;
@@ -117,47 +116,29 @@
       overflow: visible;
     }
 
-    /* Letra V desliza da esquerda para o centro */
-    .anim-v {
-      transform: translateX(-40px);
+    /* Animação de entrada do traçado unificado VA */
+    .anim-va-symbol {
       opacity: 0;
-      animation: enterV 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.2s;
+      transform: scale(0.92);
+      transform-origin: center;
+      animation: enterSymbol 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
     }
 
-    /* Letra A desliza da direita para o centro e apenas toca o V */
-    .anim-a {
-      transform: translateX(40px);
-      opacity: 0;
-      animation: enterA 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.55s;
-    }
-
-    /* Círculo que se desenha ao redor */
     .anim-circle {
       stroke-dasharray: 440;
       stroke-dashoffset: 440;
       transform-origin: center;
-      animation: drawCircle 1.1s cubic-bezier(0.45, 0, 0.2, 1) forwards 1.25s;
+      animation: drawCircle 1.1s cubic-bezier(0.45, 0, 0.2, 1) forwards 1.15s;
     }
 
-    @keyframes enterV {
+    @keyframes enterSymbol {
       0% {
         opacity: 0;
-        transform: translateX(-50px) scale(0.92);
+        transform: scale(0.85) translateY(12px);
       }
       100% {
         opacity: 1;
-        transform: translateX(0) scale(1);
-      }
-    }
-
-    @keyframes enterA {
-      0% {
-        opacity: 0;
-        transform: translateX(50px) scale(0.92);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0) scale(1);
+        transform: scale(1) translateY(0);
       }
     }
 
@@ -170,7 +151,6 @@
       }
     }
 
-    /* TEXTO REVELADO LETRA POR LETRA */
     .splash-text {
       font-family: var(--serif);
       font-size: clamp(1.15rem, 3.2vw, 1.65rem);
@@ -219,7 +199,7 @@
       to { opacity: 1; }
     }
 
-    /* ELEMENTOS COMUNS */
+    /* ELEMENTOS BÁSICOS */
     img {
       display: block;
       max-width: 100%;
@@ -228,6 +208,13 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
     }
 
     button,
@@ -286,14 +273,22 @@
       line-height: 1.1;
     }
 
-    .brand-logo {
+    .brand-logo-wrap {
       width: 44px;
       height: 44px;
       border-radius: 50%;
       border: 1px solid var(--line);
       box-shadow: 0 4px 12px rgba(67, 43, 39, .06);
-      object-fit: contain;
       background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px;
+    }
+
+    .brand-logo-wrap svg {
+      width: 100%;
+      height: 100%;
     }
 
     .brand-text {
@@ -354,9 +349,7 @@
       cursor: pointer;
     }
 
-    /* =========================================================
-       HERO: FOTO ROTACIONADA EM 10° E SEM MOLDURA
-       ========================================================= */
+    /* HERO */
     .hero {
       position: relative;
       overflow: hidden;
@@ -454,7 +447,7 @@
       font-size: .88rem;
     }
 
-    /* CONTAINER DA FOTO INICIAL (SEM MOLDURA + ROTACIONADA EM -10°) */
+    /* FOTO INICIAL ROTACIONADA EM -10° */
     .hero-visual {
       position: relative;
       display: flex;
@@ -717,7 +710,9 @@
       font-size: .93rem;
     }
 
-    /* GALERIA & SOBRE */
+    /* =========================================================
+       GALERIA: CONTADOR DE LIKES, HOVER E FLUXO SELEÇÃO MOBILE
+       ========================================================= */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -727,7 +722,7 @@
 
     .gallery-card {
       position: relative;
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
       padding: 3px;
       background: var(--line);
@@ -738,6 +733,7 @@
                   box-shadow 0.4s ease,
                   background 0.35s ease,
                   z-index 0s linear;
+      user-select: none;
     }
 
     .gallery-card::before {
@@ -756,14 +752,17 @@
       z-index: -1;
     }
 
-    .gallery-card:hover {
+    /* Estado de Hover (Desktop) e Estado Selecionado (Mobile / Clique) */
+    .gallery-card:hover,
+    .gallery-card.is-selected {
       transform: translateY(-8px) scale(1.2);
       box-shadow: 0 24px 50px rgba(67, 43, 39, .28);
       background: var(--rose-dark);
       z-index: 20;
     }
 
-    .gallery-card:hover::before {
+    .gallery-card:hover::before,
+    .gallery-card.is-selected::before {
       opacity: 1;
       animation: rotate-border 2.4s linear infinite;
     }
@@ -772,42 +771,125 @@
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: cover;
-      border-radius: 9px;
+      border-radius: 11px;
       display: block;
       border: 1px solid rgba(255, 253, 251, .85);
       transition: transform 0.4s ease;
     }
 
-    .photo-overlay-cta {
+    /* BOTÃO DE CORAÇÃO E CONTADOR */
+    .like-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      background: rgba(255, 253, 251, 0.92);
+      border: 1px solid rgba(232, 220, 212, 0.8);
+      border-radius: 999px;
+      box-shadow: 0 4px 14px rgba(67, 43, 39, 0.16);
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .like-badge:hover {
+      transform: scale(1.08);
+      background: #ffffff;
+    }
+
+    .heart-icon {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: var(--muted);
+      stroke-width: 2;
+      transition: stroke 0.25s ease, fill 0.25s ease, transform 0.25s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+    }
+
+    .like-badge.is-liked .heart-icon {
+      fill: #d1495b;
+      stroke: #d1495b;
+      animation: heartPulse 0.45s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+    }
+
+    @keyframes heartPulse {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.4); }
+      75% { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+
+    .like-count {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--ink);
+      min-width: 24px;
+      text-align: left;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .like-badge.is-liked .like-count {
+      color: #962838;
+    }
+
+    /* OVERLAY E BOTÃO DE AGENDAMENTO */
+    .photo-overlay {
       position: absolute;
       inset: 3px;
-      border-radius: 9px;
-      background: linear-gradient(to top, rgba(52, 43, 42, 0.82) 0%, rgba(52, 43, 42, 0.1) 60%);
+      border-radius: 11px;
+      background: linear-gradient(to top, rgba(52, 43, 42, 0.84) 0%, rgba(52, 43, 42, 0.1) 60%);
       display: flex;
       align-items: flex-end;
       justify-content: center;
       padding: 14px;
       opacity: 0;
+      pointer-events: none;
       transition: opacity 0.35s ease;
+      z-index: 5;
     }
 
-    .photo-overlay-cta span {
-      padding: 7px 14px;
+    .cta-result-btn {
+      padding: 8px 16px;
       color: white;
       background: var(--rose-dark);
       border-radius: 999px;
-      font-size: .78rem;
+      font-size: .8rem;
       font-weight: 700;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
       transform: translateY(10px);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: auto;
     }
 
-    .gallery-card:hover .photo-overlay-cta {
+    .cta-result-btn:hover {
+      background: #7a4646;
+    }
+
+    /* No desktop, mostra o botão no hover */
+    @media (hover: hover) {
+      .gallery-card:hover .photo-overlay {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .gallery-card:hover .cta-result-btn {
+        transform: translateY(0);
+      }
+    }
+
+    /* No Mobile / Touch: o botão só surge quando o card estiver com a classe .is-selected */
+    .gallery-card.is-selected .photo-overlay {
       opacity: 1;
+      pointer-events: auto;
     }
 
-    .gallery-card:hover .photo-overlay-cta span {
+    .gallery-card.is-selected .cta-result-btn {
       transform: translateY(0);
     }
 
@@ -816,7 +898,7 @@
       to { transform: rotate(360deg); }
     }
 
-    /* FAIXA */
+    /* FAIXA INSPIRACIONAL */
     .experience-strip {
       padding-block: 55px;
       color: white;
@@ -909,17 +991,23 @@
         transform: none !important;
         margin-top: 12px;
       }
-      .photo-overlay-cta {
+      /* Desativa zoom forçado no hover em celular, dependendo da seleção ativa */
+      .gallery-card:hover {
+        transform: none;
+        box-shadow: 0 8px 25px rgba(67, 43, 39, .08);
+        background: var(--line);
+      }
+      .gallery-card:hover::before {
+        opacity: 0;
+      }
+      /* Apenas o card selecionado recebe a escala no celular */
+      .gallery-card.is-selected {
+        transform: translateY(-6px) scale(1.1) !important;
+        box-shadow: 0 20px 45px rgba(67, 43, 39, .25) !important;
+        background: var(--rose-dark) !important;
+      }
+      .gallery-card.is-selected::before {
         opacity: 1 !important;
-        background: linear-gradient(to top, rgba(52, 43, 42, 0.75) 0%, transparent 50%);
-      }
-      .photo-overlay-cta span {
-        transform: none !important;
-        font-size: .72rem;
-      }
-      .service-card:active,
-      .gallery-card:active {
-        transform: scale(1.05);
       }
     }
 
@@ -1046,16 +1134,16 @@
 </head>
 
 <body>
-  <!-- TELA DE ABERTURA COM MONOGRAMA ANIMADO E LETRAS EM CASCATA -->
+  <!-- TELA DE ABERTURA COM MONOGRAMA UNIFICADO VA -->
   <aside id="splash-screen" aria-label="Vilaine Alves Studio de Beleza">
     <div class="splash-container">
       <div class="monogram-svg-wrap">
         <svg class="monogram-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#d4b278" />
-              <stop offset="50%" stop-color="#b68c4e" />
-              <stop offset="100%" stop-color="#916a31" />
+              <stop offset="0%" stop-color="#d8ba82" />
+              <stop offset="45%" stop-color="#b68c4e" />
+              <stop offset="100%" stop-color="#8c6328" />
             </linearGradient>
             <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#d9bd8d" />
@@ -1064,30 +1152,30 @@
           </defs>
 
           <!-- Círculo que se desenha ao redor -->
-          <circle class="anim-circle" cx="80" cy="80" r="70" stroke="url(#ringGrad)" stroke-width="2.5" />
+          <circle class="anim-circle" cx="80" cy="80" r="70" stroke="url(#ringGrad)" stroke-width="2.2" />
 
-          <!-- Letra V animada (avança da esquerda para o centro) -->
-          <g class="anim-v">
-            <path d="M38 48 H53 L62 94 L71 48 H84 L68 112 H58 Z" fill="url(#goldGrad)"/>
-            <!-- Serifa clássica superior do V -->
-            <path d="M36 48 H53 V51.5 H36 Z" fill="url(#goldGrad)"/>
-          </g>
-
-          <!-- Letra A animada (avança da direita e apenas encosta no V, sem sobrepor) -->
-          <g class="anim-a">
-            <!-- Perna esquerda do A: desce do topo e apenas toca suavemente a borda do V em (71,82) -->
-            <path d="M91 53 L73 112 H82 L86 98 H102 L95 72 L91 53 Z" fill="url(#goldGrad)"/>
-            <!-- Barra horizontal do A tocando a lateral do V sem cobri-la -->
-            <path d="M72 82 H98 V85.5 H72 Z" fill="url(#goldGrad)"/>
-            <!-- Haste curva ascendente característica do monograma VA -->
-            <path d="M84 110 C96 94 112 70 121 34 C122 30 120 32 117 37 C108 66 94 88 80 106 Z" fill="url(#goldGrad)"/>
-            <!-- Floreio suave do A -->
-            <path d="M80 62 C85 58 90 57 96 57 C92 61 88 65 83 70 Z" fill="url(#goldGrad)"/>
+          <!-- Símbolo VA Unificado Contínuo -->
+          <g class="anim-va-symbol">
+            <!-- Haste esquerda clássica do V com serifa -->
+            <path d="M41 52 H57 V55 H49.5 L61 97 H68.5 L57 55 H41 Z" fill="url(#goldGrad)"/>
+            <path d="M39 52 H57 V55 H39 Z" fill="url(#goldGrad)"/>
+            
+            <!-- Haste direita do V: prolongada ao dobro do comprimento com curva para a direita -->
+            <path d="M64 97 L82 52 C89 34 100 22 119 14 C121 13 120 16 117 18 C102 26 91 40 85 58 L72 97 Z" fill="url(#goldGrad)"/>
+            
+            <!-- Letra A unida: compartilha a haste curva do V, eliminando a perna esquerda redundante -->
+            <!-- Perna direita do A descendo a partir do topo do V -->
+            <path d="M82 52 L99 108 H88 L84 94 H72 L74 88 H86 L80 66 Z" fill="url(#goldGrad)"/>
+            
+            <!-- Barra horizontal contínua conectando as duas letras -->
+            <path d="M68 83 H90 V86.5 H68 Z" fill="url(#goldGrad)"/>
+            
+            <!-- Floreio estilizado no ápice do monograma -->
+            <path d="M78 57 C83 53 88 52 94 52 C90 56 86 60 81 65 Z" fill="url(#goldGrad)"/>
           </g>
         </svg>
       </div>
 
-      <!-- Texto revelado letra por letra dinamicamente via JS -->
       <h1 class="splash-text" id="splash-title" aria-label="Vilaine Alves Studio"></h1>
       <p class="splash-tagline">Beleza · Sofisticação · Cuidado</p>
     </div>
@@ -1099,7 +1187,21 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#inicio" aria-label="Vilaine Alves, início">
-        <img class="brand-logo" src="imagens/logo.png" alt="Logo Vilaine Alves" width="44" height="44">
+        <div class="brand-logo-wrap">
+          <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="headerGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#b87978" />
+                <stop offset="100%" stop-color="#965d5d" />
+              </linearGradient>
+            </defs>
+            <circle cx="80" cy="80" r="70" stroke="url(#headerGold)" stroke-width="3" />
+            <path d="M41 52 H57 V55 H49.5 L61 97 H68.5 L57 55 H41 Z" fill="url(#headerGold)"/>
+            <path d="M64 97 L82 52 C89 34 100 22 119 14 C121 13 120 16 117 18 C102 26 91 40 85 58 L72 97 Z" fill="url(#headerGold)"/>
+            <path d="M82 52 L99 108 H88 L84 94 H72 L74 88 H86 L80 66 Z" fill="url(#headerGold)"/>
+            <path d="M68 83 H90 V86.5 H68 Z" fill="url(#headerGold)"/>
+          </svg>
+        </div>
         <div class="brand-text">
           <span class="brand-name">Vilaine Alves</span>
           <span class="brand-caption">Studio de Beleza</span>
@@ -1121,7 +1223,7 @@
   </header>
 
   <main id="conteudo">
-    <!-- HERO COM FOTO ROTACIONADA EM 10° E SEM MOLDURA -->
+    <!-- HERO -->
     <section class="hero" id="inicio">
       <div class="container hero-grid">
         <div class="hero-content">
@@ -1158,17 +1260,30 @@
     <section class="section" id="sobre">
       <div class="container about-grid">
         <div class="about-photos" aria-label="Fotos do Studio Vilaine Alves">
-          <div class="gallery-card">
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/1.jpg" alt="Apresentação Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20conhecer%20o%20Studio%20Vilaine%20Alves." target="_blank" rel="noopener noreferrer">
-              <span>Conhecer o Studio</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20conhecer%20o%20Studio%20Vilaine%20Alves." target="_blank" rel="noopener noreferrer">
+                Conhecer o Studio →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/2.jpg" alt="Trabalho Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20os%20trabalhos%20do%20Studio%20Vilaine%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener noreferrer">
-              <span>Agendar Horário</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20os%20trabalhos%20do%20Studio%20Vilaine%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener noreferrer">
+                Agendar Horário →
+              </a>
+            </div>
           </div>
         </div>
 
@@ -1270,78 +1385,173 @@
           <p>Cabelo, maquiagem, unhas e sobrancelhas realizados no studio.</p>
         </div>
 
-        <div class="gallery-grid">
-          <div class="gallery-card">
+        <div class="gallery-grid" id="main-gallery">
+          <!-- Item 3 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/3.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 4 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/4.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 6 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/6.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 7 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/7.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 8 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/8.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 9 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/9.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 10 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/10.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 11 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/11.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 12 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/12.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 13 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/13.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 14 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/14.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
-          <div class="gallery-card">
+
+          <!-- Item 15 -->
+          <div class="gallery-card" data-gallery-item>
+            <div class="like-badge" role="button" aria-label="Curtir foto">
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="like-count"></span>
+            </div>
             <img src="imagens/15.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
-            <a class="photo-overlay-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
-              <span>Quero este resultado</span>
-            </a>
+            <div class="photo-overlay">
+              <a class="cta-result-btn" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20adorei%20este%20resultado%20na%20galeria%20do%20site%20e%20quero%20agendar%21" target="_blank" rel="noopener noreferrer">
+                Quero este resultado →
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -1400,12 +1610,12 @@
   </a>
 
   <script>
-    // Geração dinâmica das letras animadas uma a uma
+    // Gerenciador de Animação de Abertura
     window.addEventListener("DOMContentLoaded", () => {
       const titleEl = document.getElementById("splash-title");
       const fullText = "VILAINE ALVES STUDIO";
-      const baseDelay = 1.6;
-      const step = 0.045;
+      const baseDelay = 1.35;
+      const step = 0.042;
 
       titleEl.innerHTML = "";
       let letterIndex = 0;
@@ -1426,7 +1636,6 @@
         }
       }
 
-      // Transição para revelar o site
       const splash = document.getElementById("splash-screen");
       if (splash) {
         setTimeout(() => {
@@ -1434,7 +1643,55 @@
           setTimeout(() => {
             splash.remove();
           }, 850);
-        }, 3400);
+        }, 3200);
+      }
+    });
+
+    // =========================================================
+    // SISTEMA DE CURTIDAS (126 a 211) E SELEÇÃO DE FOTO NO CELULAR
+    // =========================================================
+    const galleryCards = document.querySelectorAll("[data-gallery-item]");
+
+    galleryCards.forEach((card) => {
+      const likeBadge = card.querySelector(".like-badge");
+      const countEl = card.querySelector(".like-count");
+      
+      // Gera valor aleatório inicial entre 126 e 211
+      let baseLikes = Math.floor(Math.random() * (211 - 126 + 1)) + 126;
+      let isLiked = false;
+      countEl.textContent = baseLikes;
+
+      // Evento do botão de like (não aciona a seleção do card nem agendamento)
+      likeBadge.addEventListener("click", (e) => {
+        e.stopPropagation();
+        isLiked = !isLiked;
+        likeBadge.classList.toggle("is-liked", isLiked);
+        countEl.textContent = isLiked ? (baseLikes + 1) : baseLikes;
+      });
+
+      // No mobile / toque: o primeiro toque seleciona a foto sem abrir WhatsApp
+      card.addEventListener("click", (e) => {
+        // Se tocou direto no link ou botão de WhatsApp, deixa navegar normalmente
+        if (e.target.closest(".cta-result-btn") || e.target.closest(".like-badge")) {
+          return;
+        }
+
+        // Se o card já está selecionado, pode desselecionar
+        const isAlreadySelected = card.classList.contains("is-selected");
+
+        // Remove seleção de qualquer outro card
+        galleryCards.forEach(c => c.classList.remove("is-selected"));
+
+        if (!isAlreadySelected) {
+          card.classList.add("is-selected");
+        }
+      });
+    });
+
+    // Fecha a seleção ao tocar fora de qualquer foto da galeria
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest("[data-gallery-item]")) {
+        galleryCards.forEach(c => c.classList.remove("is-selected"));
       }
     });
 
