@@ -116,21 +116,18 @@
       overflow: visible;
     }
 
-    /* O V começa à esquerda e desloca-se até o centro */
     .anim-v {
       opacity: 0;
       transform: translate(-44px, 0);
       animation: enterV 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.25s;
     }
 
-    /* O A começa à direita e move-se até a junção com o V */
     .anim-a {
       opacity: 0;
       transform: translate(44px, 0);
       animation: enterA 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.8s;
     }
 
-    /* O Círculo dourado desenha-se logo após a união das letras */
     .anim-circle {
       stroke-dasharray: 440;
       stroke-dashoffset: 440;
@@ -729,7 +726,7 @@
     }
 
     /* =========================================================
-       GALERIA: FOTO SELECIONADA E PULSAÇÃO DE BATIMENTO CARDÍACO
+       GALERIA: FOTO SELECIONADA E ANIMAÇÃO VISÍVEL DO CORAÇÃO
        ========================================================= */
     .gallery-grid {
       display: grid;
@@ -770,7 +767,6 @@
       z-index: -1;
     }
 
-    /* Estado de Hover (Desktop) e Estado Selecionado (Mobile / Clique) */
     .gallery-card:hover,
     .gallery-card.is-selected {
       transform: translateY(-8px) scale(1.2);
@@ -795,7 +791,7 @@
       transition: transform 0.4s ease;
     }
 
-    /* BOTÃO DE CORAÇÃO E CONTADOR */
+    /* BOTÃO DO CORAÇÃO */
     .like-badge {
       position: absolute;
       top: 10px;
@@ -803,15 +799,15 @@
       z-index: 10;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 5px 9px;
-      background: rgba(255, 253, 251, 0.94);
-      border: 1px solid rgba(232, 220, 212, 0.85);
+      gap: 6px;
+      padding: 6px 11px;
+      background: rgba(255, 253, 251, 0.95);
+      border: 1px solid rgba(232, 220, 212, 0.9);
       border-radius: 999px;
       box-shadow: 0 4px 14px rgba(67, 43, 39, 0.16);
       backdrop-filter: blur(6px);
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .like-badge:hover {
@@ -820,52 +816,54 @@
     }
 
     .heart-icon {
-      width: 16px;
-      height: 16px;
+      width: 17px;
+      height: 17px;
       fill: none;
       stroke: var(--muted);
       stroke-width: 2;
-      display: inline-block;
-      transform-origin: center;
-      transition: stroke 0.25s ease, fill 0.25s ease;
+      display: block;
+      transform-origin: 50% 50%;
+      transform-box: fill-box;
+      transition: stroke 0.25s ease, fill 0.25s ease, transform 0.2s ease;
     }
 
-    /* Curtido manualmente: preenchimento avermelhado */
-    .like-badge.is-liked .heart-icon {
-      fill: #d1495b;
-      stroke: #d1495b;
-    }
-
-    /* FOTO SELECIONADA: PULSAÇÃO CONTÍNUA EM RITMO DE BATIMENTO CARDÍACO */
+    /* CORAÇÃO SELECIONADO: PULSAÇÃO NÍTIDA E CONTÍNUA */
+    .like-badge.is-liked .heart-icon,
     .gallery-card.is-selected .heart-icon {
-      animation: heartbeatPulse 1.2s ease-in-out infinite !important;
-      stroke: #d1495b;
-      fill: rgba(209, 73, 91, 0.3);
+      animation: heartbeatPulse 0.95s cubic-bezier(0.215, 0.61, 0.355, 1) infinite !important;
+      fill: #e63946 !important;
+      stroke: #e63946 !important;
+      filter: drop-shadow(0 1px 3px rgba(230, 57, 70, 0.35));
     }
 
-    .gallery-card.is-selected .like-badge.is-liked .heart-icon {
-      fill: #d1495b;
-    }
-
+    .like-badge.is-liked,
     .gallery-card.is-selected .like-badge {
-      border-color: rgba(209, 73, 91, 0.45);
-      box-shadow: 0 4px 18px rgba(209, 73, 91, 0.25);
+      border-color: rgba(230, 57, 70, 0.45);
+      background: #ffffff;
+      box-shadow: 0 4px 18px rgba(230, 57, 70, 0.2);
     }
 
+    .like-badge.is-liked .like-count,
+    .gallery-card.is-selected .like-count {
+      color: #c1121f;
+      font-weight: 700;
+    }
+
+    /* Animação com duplo pulso característico de batimento cardíaco */
     @keyframes heartbeatPulse {
       0% {
         transform: scale(1);
       }
-      14% {
-        transform: scale(1.38);
+      15% {
+        transform: scale(1.42);
       }
-      28% {
+      30% {
         transform: scale(1);
       }
-      42% {
-        transform: scale(1.24);
+      45% {
+        transform: scale(1.26);
       }
-      70% {
+      60% {
         transform: scale(1);
       }
       100% {
@@ -874,17 +872,12 @@
     }
 
     .like-count {
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       font-weight: 700;
       color: var(--ink);
       min-width: 24px;
       text-align: left;
       font-variant-numeric: tabular-nums;
-    }
-
-    .like-badge.is-liked .like-count,
-    .gallery-card.is-selected .like-count {
-      color: #962838;
     }
 
     /* OVERLAY E BOTÃO DE AGENDAMENTO */
@@ -923,7 +916,6 @@
       background: #7a4646;
     }
 
-    /* No desktop: mostra o botão no hover */
     @media (hover: hover) {
       .gallery-card:hover .photo-overlay {
         opacity: 1;
@@ -934,7 +926,6 @@
       }
     }
 
-    /* No celular/toque: o botão só surge quando o card estiver com a classe .is-selected */
     .gallery-card.is-selected .photo-overlay {
       opacity: 1;
       pointer-events: auto;
@@ -1183,7 +1174,7 @@
 </head>
 
 <body>
-  <!-- TELA DE ABERTURA COM MONOGRAMA ANIMADO (V da esquerda, A da direita) -->
+  <!-- TELA DE ABERTURA COM MONOGRAMA ANIMADO -->
   <aside id="splash-screen" aria-label="Vilaine Alves Studio de Beleza">
     <div class="splash-container">
       <div class="monogram-svg-wrap">
@@ -1200,7 +1191,7 @@
             </linearGradient>
           </defs>
 
-          <!-- Círculo que se desenha ao redor após a junção -->
+          <!-- Círculo que se desenha ao redor -->
           <circle class="anim-circle" cx="80" cy="80" r="70" stroke="url(#ringGrad)" stroke-width="2.2" />
 
           <!-- V: entra da esquerda até o centro -->
@@ -1653,7 +1644,7 @@
   </a>
 
   <script>
-    // Gerenciador da Animação de Abertura (Letras do título e fade out)
+    // Gerenciador da Animação de Abertura
     window.addEventListener("DOMContentLoaded", () => {
       const titleEl = document.getElementById("splash-title");
       const fullText = "VILAINE ALVES STUDIO";
@@ -1691,7 +1682,7 @@
     });
 
     // =========================================================
-    // GALERIA: CONTADOR DE LIKES (126-211) E SELEÇÃO DE FOTO
+    // GALERIA: CONTROLE DE SELEÇÃO E ANIMAÇÃO DOS CORAÇÕES
     // =========================================================
     const galleryCards = document.querySelectorAll("[data-gallery-item]");
 
@@ -1699,39 +1690,44 @@
       const likeBadge = card.querySelector(".like-badge");
       const countEl = card.querySelector(".like-count");
       
-      // Gera contagem inicial aleatória entre 126 e 211
       let baseLikes = Math.floor(Math.random() * (211 - 126 + 1)) + 126;
       let isLiked = false;
       countEl.textContent = baseLikes;
 
-      // Clique no botão de curtir
+      // Clique direto no coração
       likeBadge.addEventListener("click", (e) => {
         e.stopPropagation();
         isLiked = !isLiked;
         likeBadge.classList.toggle("is-liked", isLiked);
         countEl.textContent = isLiked ? (baseLikes + 1) : baseLikes;
+
+        if (isLiked) {
+          galleryCards.forEach(c => {
+            if (c !== card) c.classList.remove("is-selected");
+          });
+          card.classList.add("is-selected");
+        } else {
+          card.classList.remove("is-selected");
+        }
       });
 
-      // Clique/toque na foto para selecionar e ativar o batimento cardíaco
+      // Clique no card da foto
       card.addEventListener("click", (e) => {
-        // Se tocou no botão de agendamento ou no coração, deixa executar normalmente
         if (e.target.closest(".cta-result-btn") || e.target.closest(".like-badge")) {
           return;
         }
 
-        const isAlreadySelected = card.classList.contains("is-selected");
+        const isCurrentlySelected = card.classList.contains("is-selected");
 
-        // Remove seleção de outras fotos
         galleryCards.forEach(c => c.classList.remove("is-selected"));
 
-        // Alterna seleção da foto atual
-        if (!isAlreadySelected) {
+        if (!isCurrentlySelected) {
           card.classList.add("is-selected");
         }
       });
     });
 
-    // Desseleciona ao clicar/tocar fora da galeria (para o batimento cardíaco)
+    // Desseleciona ao clicar fora
     document.addEventListener("click", (e) => {
       if (!e.target.closest("[data-gallery-item]")) {
         galleryCards.forEach(c => c.classList.remove("is-selected"));
