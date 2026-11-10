@@ -366,12 +366,13 @@
     }
 
     /* =========================================================
-       SEÇÃO SERVIÇOS: EFEITO DE HOVER + BORDA ANIMADA HORÁRIA
+       SEÇÃO SERVIÇOS: ESCALA 1.2, SOBREPOSIÇÃO E FUNDO ESCURECIDO
        ========================================================= */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+      gap: 22px;
+      position: relative;
     }
 
     .service-card {
@@ -383,28 +384,30 @@
       overflow: hidden;
       isolation: isolate;
       cursor: pointer;
-      transition: transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  box-shadow 0.38s ease;
+      z-index: 1;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.4s ease,
+                  z-index 0s linear;
     }
 
-    /* Borda rotativa que percorre no sentido horário */
+    /* Borda animada no sentido horário */
     .service-card::before {
       content: "";
       position: absolute;
       inset: -150%;
       background: conic-gradient(
         from 0deg,
-        transparent 65%,
-        rgba(232, 220, 212, 0.4) 75%,
+        transparent 60%,
+        rgba(232, 220, 212, 0.45) 75%,
         var(--rose) 88%,
         var(--rose-dark) 100%
       );
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.35s ease;
       z-index: -2;
     }
 
-    /* Fundo interno do card que muda de cor suavemente */
+    /* Camada interna que controla a cor do fundo */
     .service-card::after {
       content: "";
       position: absolute;
@@ -412,23 +415,25 @@
       background: var(--white);
       border: 1px solid var(--line);
       border-radius: 12px;
-      transition: background 0.38s ease, border-color 0.38s ease;
+      transition: background 0.4s ease, border-color 0.4s ease;
       z-index: -1;
     }
 
+    /* Ao passar o mouse: escala 1.2 (+20%), sobrepõe tudo e escurece nitidamente */
     .service-card:hover {
-      transform: translateY(-6px) scale(1.2);
-      box-shadow: 0 18px 42px rgba(150, 93, 93, .16);
+      transform: translateY(-8px) scale(1.2);
+      box-shadow: 0 24px 55px rgba(67, 43, 39, .24);
+      z-index: 20;
     }
 
     .service-card:hover::before {
       opacity: 1;
-      animation: rotate-border 2.8s linear infinite;
+      animation: rotate-border 2.6s linear infinite;
     }
 
     .service-card:hover::after {
-      background: #fdf8f5;
-      border-color: transparent;
+      background: #ebdcd3; /* Tom claramente mais escuro, acolhedor e harmônico */
+      border-color: rgba(150, 93, 93, .35);
     }
 
     .service-card h3 {
@@ -439,15 +444,24 @@
       transition: color 0.3s ease;
     }
 
+    .service-card:hover h3 {
+      color: #7b4242; /* Aumenta contraste e elegância no fundo mais escuro */
+    }
+
     .service-card p {
       position: relative;
       margin-bottom: 0;
       color: var(--muted);
       font-size: .95rem;
+      transition: color 0.3s ease;
+    }
+
+    .service-card:hover p {
+      color: #4b3d3b; /* Mantém perfeita legibilidade */
     }
 
     .service-note {
-      margin: 24px 0 0;
+      margin: 32px 0 0;
       padding: 17px 20px;
       color: #594a46;
       background: var(--cream);
@@ -457,48 +471,54 @@
     }
 
     /* =========================================================
-       SEÇÃO GALERIA: EFEITO DE HOVER + BORDA ANIMADA HORÁRIA
+       SEÇÃO GALERIA: ESCALA 1.2, SOBREPOSIÇÃO E BORDA VISÍVEL
        ========================================================= */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
+      gap: 18px;
+      position: relative;
     }
 
     .gallery-card {
       position: relative;
       border-radius: 12px;
       overflow: hidden;
-      padding: 2px;
+      padding: 3px;
       background: var(--line);
       box-shadow: 0 8px 25px rgba(67, 43, 39, .08);
       isolation: isolate;
       cursor: pointer;
-      transition: transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  box-shadow 0.38s ease;
+      z-index: 1;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.4s ease,
+                  background 0.35s ease,
+                  z-index 0s linear;
     }
 
-    /* Feixe de luz rotativo no sentido horário */
+    /* Borda animada luminosa no sentido horário */
     .gallery-card::before {
       content: "";
       position: absolute;
       inset: -150%;
       background: conic-gradient(
         from 0deg,
-        transparent 65%,
-        rgba(232, 220, 212, 0.5) 75%,
-        var(--rose) 88%,
+        transparent 55%,
+        rgba(255, 255, 255, 0.8) 72%,
+        var(--rose) 86%,
         var(--rose-dark) 100%
       );
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.35s ease;
       z-index: -1;
     }
 
+    /* Ao passar o mouse: escala 1.2 (+20%), sobrepõe os vizinhos e ganha borda visível */
     .gallery-card:hover {
-      transform: translateY(-5px) scale(1.2);
-      box-shadow: 0 16px 36px rgba(150, 93, 93, .22);
-      z-index: 5;
+      transform: translateY(-8px) scale(1.2);
+      box-shadow: 0 24px 50px rgba(67, 43, 39, .28);
+      background: var(--rose-dark); /* Borda visível e destacada */
+      z-index: 20;
     }
 
     .gallery-card:hover::before {
@@ -510,16 +530,13 @@
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 9px;
       display: block;
-      transition: transform 0.38s ease;
+      border: 1px solid rgba(255, 253, 251, .85); /* Contorno nítido separando a foto da borda */
+      transition: transform 0.4s ease;
     }
 
-    .gallery-card:hover img {
-      transform: scale(1.2);
-    }
-
-    /* Animação que percorre o contorno no sentido horário */
+    /* Giro horário contínuo */
     @keyframes rotate-border {
       from {
         transform: rotate(0deg);
