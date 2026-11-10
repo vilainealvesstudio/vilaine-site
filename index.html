@@ -1,1 +1,791 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f2ed">
+
+  <title>Vilaine Alves | Studio de Beleza em Rio Verde, GO</title>
+  <meta name="description" content="Studio de beleza Vilaine Alves em Rio Verde, GO. Maquiagem, cabelo, unhas e design de sobrancelhas. Agende pelo WhatsApp.">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Vilaine Alves | Studio de Beleza">
+  <meta property="og:description" content="Beleza e cuidado em Rio Verde, GO. Conheça os serviços e agende pelo WhatsApp.">
+  <meta property="og:locale" content="pt_BR">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BeautySalon",
+    "name": "Vilaine Alves",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rua Costa Gomes, 385",
+      "addressLocality": "Rio Verde",
+      "addressRegion": "GO",
+      "addressCountry": "BR"
+    },
+    "telephone": "+5564999047436",
+    "sameAs": [
+      "https://www.instagram.com/vilainealvesstudio2026/"
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --cream: #f7f2ed;
+      --cream-dark: #eee4dc;
+      --rose: #b87978;
+      --rose-dark: #965d5d;
+      --ink: #342b2a;
+      --muted: #726866;
+      --white: #fffdfb;
+      --line: #e8dcd4;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+      --shadow: 0 18px 50px rgba(67, 43, 39, .09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: var(--sans);
+      line-height: 1.65;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #8d4d4b;
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: -60px;
+      left: 16px;
+      z-index: 1000;
+      padding: 10px 14px;
+      background: var(--ink);
+      color: white;
+      border-radius: 6px;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 253, 251, .96);
+      border-bottom: 1px solid rgba(232, 220, 212, .8);
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      text-decoration: none;
+      line-height: 1.1;
+    }
+
+    .brand-name {
+      display: block;
+      color: var(--rose-dark);
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+
+    .brand-caption {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .66rem;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav a {
+      color: var(--ink);
+      font-size: .9rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      color: var(--rose-dark);
+    }
+
+    .nav .nav-cta {
+      padding: 10px 17px;
+      color: white;
+      background: var(--rose-dark);
+      border-radius: 999px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink);
+      background: var(--white);
+      font-size: 1.35rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 590px;
+      display: grid;
+      align-items: center;
+      background:
+        radial-gradient(ellipse at 82% 28%, rgba(184, 121, 120, .20), transparent 30%),
+        radial-gradient(ellipse at 78% 82%, rgba(220, 191, 173, .42), transparent 32%),
+        linear-gradient(115deg, var(--cream) 0%, #f9f5f1 52%, #eadbd1 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 7%;
+      top: 12%;
+      width: min(35vw, 430px);
+      aspect-ratio: 4 / 5;
+      border: 1px solid rgba(150, 93, 93, .28);
+      border-radius: 48% 48% 8px 8px;
+      transform: rotate(5deg);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      padding-block: 90px;
+    }
+
+    .eyebrow {
+      margin: 0 0 17px;
+      color: var(--rose-dark);
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      line-height: 1.15;
+    }
+
+    h1 {
+      max-width: 660px;
+      margin-bottom: 20px;
+      font-size: clamp(3rem, 7vw, 5.7rem);
+      letter-spacing: -.035em;
+    }
+
+    .hero-copy {
+      max-width: 530px;
+      margin-bottom: 30px;
+      color: #5f5350;
+      font-size: 1.1rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 22px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: white;
+      background: var(--rose-dark);
+    }
+
+    .button-primary:hover {
+      background: #7e4d4d;
+    }
+
+    .button-secondary {
+      color: var(--ink);
+      background: rgba(255, 253, 251, .55);
+      border-color: rgba(150, 93, 93, .4);
+    }
+
+    .hero-note {
+      margin-top: 27px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .section {
+      padding-block: 88px;
+    }
+
+    .section-soft {
+      background: var(--cream);
+    }
+
+    .section-heading {
+      max-width: 690px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 14px;
+      font-size: clamp(2.2rem, 4vw, 3.3rem);
+    }
+
+    .section-heading p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 58px;
+    }
+
+    .about-card {
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      padding: 36px;
+      color: var(--rose-dark);
+      background:
+        radial-gradient(ellipse at 50% 45%, rgba(255, 253, 251, .88), transparent 52%),
+        linear-gradient(145deg, #eadbd1, #f7f2ed 58%, #d9b9ae);
+      border-radius: 48% 48% 12px 12px;
+      text-align: center;
+    }
+
+    .about-card span {
+      max-width: 260px;
+      font-family: var(--serif);
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+
+    .about-copy h2 {
+      margin-bottom: 18px;
+      font-size: clamp(2.1rem, 4vw, 3rem);
+    }
+
+    .about-copy p {
+      color: var(--muted);
+    }
+
+    .experience {
+      display: inline-block;
+      margin-top: 7px;
+      padding: 10px 15px;
+      color: var(--rose-dark);
+      background: var(--cream);
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .service-card {
+      padding: 27px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(67, 43, 39, .035);
+    }
+
+    .service-card h3 {
+      margin-bottom: 10px;
+      color: var(--rose-dark);
+      font-size: 1.55rem;
+    }
+
+    .service-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .service-note {
+      margin: 24px 0 0;
+      padding: 17px 20px;
+      color: #594a46;
+      background: var(--cream);
+      border-left: 3px solid var(--rose);
+      border-radius: 4px;
+      font-size: .93rem;
+    }
+
+    .experience-strip {
+      padding-block: 55px;
+      color: white;
+      background: #493735;
+      text-align: center;
+    }
+
+    .experience-strip p {
+      margin: 0 auto;
+      max-width: 760px;
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      line-height: 1.35;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .contact-card {
+      padding: 30px;
+      background: var(--cream);
+      border-radius: 12px;
+    }
+
+    .contact-card h3 {
+      margin-bottom: 12px;
+      font-size: 1.45rem;
+    }
+
+    .contact-card p {
+      margin-bottom: 10px;
+      color: var(--muted);
+    }
+
+    .contact-card a {
+      color: var(--rose-dark);
+      font-weight: 700;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .footer {
+      padding-block: 28px;
+      color: #e9ddd6;
+      background: #342b2a;
+      text-align: center;
+      font-size: .87rem;
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 18px;
+      color: white;
+      background: #287d53;
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(23, 67, 44, .22);
+      font-size: .9rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .whatsapp-float:hover {
+      background: #206a46;
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(100% - 32px, 600px);
+      }
+
+      .header-inner {
+        min-height: 68px;
+      }
+
+      .menu-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 20px 18px;
+        background: var(--white);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav.is-open {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .nav a {
+        padding: 12px 6px;
+      }
+
+      .nav .nav-cta {
+        margin-top: 8px;
+        padding: 12px 17px;
+        text-align: center;
+      }
+
+      .hero {
+        min-height: 560px;
+      }
+
+      .hero::after {
+        right: -13%;
+        top: 15%;
+        width: 65vw;
+        opacity: .55;
+      }
+
+      .hero-inner {
+        padding-block: 78px;
+      }
+
+      .hero-copy {
+        max-width: 430px;
+        font-size: 1rem;
+      }
+
+      .section {
+        padding-block: 66px;
+      }
+
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .about-card {
+        min-height: 280px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .whatsapp-float {
+        right: 13px;
+        bottom: 13px;
+        padding: 12px 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="Vilaine Alves, início">
+        <span class="brand-name">Vilaine Alves</span>
+        <span class="brand-caption">Studio de Beleza</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
+        <span aria-hidden="true">☰</span>
+      </button>
+
+      <nav class="nav" id="menu-principal" aria-label="Navegação principal">
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#contato">Contato</a>
+        <a class="nav-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%20no%20Studio%20Vilaine." target="_blank" rel="noopener noreferrer">Agendar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="container hero-inner">
+        <p class="eyebrow">Studio de Beleza · Rio Verde, Goiás</p>
+        <h1>Um momento de cuidado feito para você.</h1>
+        <p class="hero-copy">
+          Cabelo, maquiagem, unhas e sobrancelhas em um só lugar.
+          Conheça o Studio Vilaine Alves e fale com a equipe para encontrar
+          o melhor horário.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%20no%20Studio%20Vilaine." target="_blank" rel="noopener noreferrer">Agendar pelo WhatsApp</a>
+          <a class="button button-secondary" href="#servicos">Conhecer os serviços</a>
+        </div>
+        <p class="hero-note">Atendimento das 8h às 18h · Rio Verde/GO</p>
+      </div>
+    </section>
+
+    <section class="section" id="sobre">
+      <div class="container about-grid">
+        <div class="about-card" aria-label="Apresentação do Studio Vilaine Alves">
+          <span>Beleza com cuidado e personalidade</span>
+        </div>
+
+        <div class="about-copy">
+          <p class="eyebrow">Sobre o studio</p>
+          <h2>Experiência, técnica e atenção em cada atendimento.</h2>
+          <p>
+            Vilaine Alves é maquiadora e CEO do studio. Atua na área da beleza
+            desde 2018 e realizou cursos em maquiagem, penteado, mechas e
+            colorimetria.
+          </p>
+          <p>
+            O studio reúne serviços de cabelo, maquiagem, unhas, cuidado dos
+            pés e design de sobrancelhas.
+          </p>
+          <span class="experience">Atuação na área desde 2018</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="servicos">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Serviços</p>
+          <h2>Cuidados para diferentes momentos</h2>
+          <p>Consulte a equipe sobre disponibilidade, duração e valores atualizados.</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <h3>Cabelo</h3>
+            <p>
+              Mechas e reflexo, coloração, corte, escova lisa ou modelada,
+              penteado, babyliss, finalização cacheada, tratamentos capilares,
+              alinhamento e retoque de raiz.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Maquiagem</h3>
+            <p>
+              Maquiagem completa, maquiagem express, maquiagem infantil e
+              produção para ocasiões especiais.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Unhas e pés</h3>
+            <p>
+              Mão e pé, manicure, pedicure, esmaltação, alongamento em gel,
+              esmaltação em gel, cuticulagem russa, terapia e escalda-pés.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Sobrancelhas e cuidado facial</h3>
+            <p>
+              Design de sobrancelhas, design com tintura, buço e epilação
+              egípcia facial.
+            </p>
+          </article>
+        </div>
+
+        <p class="service-note">
+          <strong>Valores:</strong> consulte a tabela atualizada diretamente
+          pelo WhatsApp. Alguns serviços podem variar conforme avaliação,
+          técnica ou quantidade de produto.
+        </p>
+      </div>
+    </section>
+
+    <section class="experience-strip" aria-label="Experiência profissional">
+      <div class="container">
+        <p>“Cada atendimento começa com escuta e atenção ao que faz sentido para você.”</p>
+      </div>
+    </section>
+
+    <section class="section" id="contato">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Contato e localização</p>
+          <h2>Vamos encontrar seu horário?</h2>
+          <p>Fale com o Studio Vilaine Alves para tirar dúvidas e consultar disponibilidade.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Visite o studio</h3>
+            <p><strong>Endereço:</strong> Rua Costa Gomes, nº 385, Centro, Rio Verde/GO.</p>
+            <p><strong>Atendimento:</strong> das 8h às 18h.</p>
+            <p>Confirme pelo WhatsApp os dias de atendimento e a disponibilidade.</p>
+            <div class="contact-actions">
+              <a class="button button-primary" href="https://www.google.com/maps/search/?api=1&query=Rua+Costa+Gomes+385%2C+Centro%2C+Rio+Verde%2C+GO" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <h3>Fale com a equipe</h3>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/5564999047436" target="_blank" rel="noopener noreferrer">(64) 99904-7436</a></p>
+            <p><strong>Instagram:</strong> <a href="https://www.instagram.com/vilainealvesstudio2026/" target="_blank" rel="noopener noreferrer">@vilainealvesstudio2026</a></p>
+            <div class="contact-actions">
+              <a class="button button-primary" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20vim%20pelo%20site%20do%20Studio%20Vilaine%20Alves." target="_blank" rel="noopener noreferrer">Chamar no WhatsApp</a>
+              <a class="button button-secondary" href="https://www.instagram.com/vilainealvesstudio2026/" target="_blank" rel="noopener noreferrer">Ver Instagram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="ano">2026</span> Vilaine Alves Studio de Beleza · Rio Verde/GO</p>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%20no%20Studio%20Vilaine." target="_blank" rel="noopener noreferrer" aria-label="Agendar pelo WhatsApp">
+    <span aria-hidden="true">✆</span>
+    <span>Agendar</span>
+  </a>
+
+  <script>
+    const menuButton = document.querySelector(".menu-toggle");
+    const menu = document.querySelector("#menu-principal");
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", String(!isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "Abrir menu" : "Fechar menu");
+      menu.classList.toggle("is-open", !isOpen);
+    });
+
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.classList.remove("is-open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Abrir menu");
+      });
+    });
+
+    document.querySelector("#ano").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
 
