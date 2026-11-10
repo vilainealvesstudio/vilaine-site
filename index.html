@@ -330,24 +330,20 @@
       gap: 58px;
     }
 
-    .about-card {
-      min-height: 360px;
+    .about-photos {
       display: grid;
-      place-items: center;
-      padding: 36px;
-      color: var(--rose-dark);
-      background:
-        radial-gradient(ellipse at 50% 45%, rgba(255, 253, 251, .88), transparent 52%),
-        linear-gradient(145deg, #eadbd1, #f7f2ed 58%, #d9b9ae);
-      border-radius: 48% 48% 12px 12px;
-      text-align: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      min-height: 360px;
     }
 
-    .about-card span {
-      max-width: 260px;
-      font-family: var(--serif);
-      font-size: 2rem;
-      line-height: 1.2;
+    .about-photos img {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(67, 43, 39, .08);
     }
 
     .about-copy h2 {
@@ -403,6 +399,25 @@
       border-left: 3px solid var(--rose);
       border-radius: 4px;
       font-size: .93rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(67, 43, 39, .08);
+      transition: transform .2s ease;
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.03);
     }
 
     .experience-strip {
@@ -488,6 +503,12 @@
       background: #206a46;
     }
 
+    @media (max-width: 860px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
     @media (max-width: 760px) {
       .container {
         width: min(100% - 32px, 600px);
@@ -560,12 +581,12 @@
         gap: 30px;
       }
 
-      .about-card {
-        min-height: 280px;
-      }
-
       .services-grid {
         grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -583,6 +604,10 @@
         right: 13px;
         bottom: 13px;
         padding: 12px 15px;
+      }
+
+      .about-photos {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -617,6 +642,7 @@
       <nav class="nav" id="menu-principal" aria-label="Navegação principal">
         <a href="#sobre">Sobre</a>
         <a href="#servicos">Serviços</a>
+        <a href="#galeria">Galeria</a>
         <a href="#contato">Contato</a>
         <a class="nav-cta" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%20no%20Studio%20Vilaine." target="_blank" rel="noopener noreferrer">Agendar</a>
       </nav>
@@ -643,8 +669,9 @@
 
     <section class="section" id="sobre">
       <div class="container about-grid">
-        <div class="about-card" aria-label="Apresentação do Studio Vilaine Alves">
-          <span>Beleza com cuidado e personalidade</span>
+        <div class="about-photos" aria-label="Fotos do Studio Vilaine Alves">
+          <img src="images/482727988_18488531143019616_1524117194702372238_n.jpg" alt="Apresentação Studio Vilaine Alves" loading="lazy">
+          <img src="images/657347179_1585518175884552_3247970431708453456_n.jpg" alt="Trabalho Studio Vilaine Alves" loading="lazy">
         </div>
 
         <div class="about-copy">
@@ -715,6 +742,29 @@
       </div>
     </section>
 
+    <section class="section" id="galeria">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Galeria</p>
+          <h2>Alguns dos nossos trabalhos</h2>
+          <p>Cabelo, maquiagem, unhas e sobrancelhas realizados no studio.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <img src="images/680775227_18579518980019616_143073884884054220_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+          <img src="images/682123422_18580652194019616_1386391614840027614_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+          <img src="images/706813690_18587322739019616_5273865773207432135_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+          <img src="images/735134183_18601376161019616_9165853951384602700_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+          <img src="images/742309004_18601833253019616_307252332915485131_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+          <img src="images/747771231_18603460516019616_3246954014993662566_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+          <img src="images/837887958_18631031335019616_114266373649474511_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+          <img src="images/844557345_18633911215019616_3940485924503185742_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+          <img src="images/849752996_18635370427019616_6104118966192891879_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+          <img src="images/850353260_18636189928019616_7365760404169038019_n.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
+        </div>
+      </div>
+    </section>
+
     <section class="experience-strip" aria-label="Experiência profissional">
       <div class="container">
         <p>“Cada atendimento começa com escuta e atenção ao que faz sentido para você.”</p>
@@ -756,7 +806,7 @@
 
   <footer class="footer">
     <div class="container">
-      <p>© <span id="ano">2026</span> Vilaine Alves Studio de Beleza · Rio Verde/GO</p>
+      <p>© <span id="ano"></span> Vilaine Alves Studio de Beleza · Rio Verde/GO</p>
     </div>
   </footer>
 
@@ -788,4 +838,3 @@
   </script>
 </body>
 </html>
-
