@@ -33,7 +33,7 @@
     },
     "telephone": "+5564999047436",
     "sameAs": [
-      "https://www.instagram.com/vilainealves/"
+      "https://www.instagram.com/vilainealvesstudio2026/"
     ]
   }
   </script>
@@ -726,7 +726,7 @@
     }
 
     /* =========================================================
-       GALERIA: FOTO SELECIONADA E ANIMAÇÃO VISÍVEL DO CORAÇÃO
+       GALERIA: FOTO SELECIONADA E CORAÇÕES
        ========================================================= */
     .gallery-grid {
       display: grid;
@@ -827,7 +827,7 @@
       transition: stroke 0.25s ease, fill 0.25s ease, transform 0.2s ease;
     }
 
-    /* CORAÇÃO SELECIONADO: PULSAÇÃO NÍTIDA E CONTÍNUA */
+    /* CORAÇÃO SELECIONADO: PULSAÇÃO NÍTIDA */
     .like-badge.is-liked .heart-icon,
     .gallery-card.is-selected .heart-icon {
       animation: heartbeatPulse 0.95s cubic-bezier(0.215, 0.61, 0.355, 1) infinite !important;
@@ -849,7 +849,6 @@
       font-weight: 700;
     }
 
-    /* Animação com duplo pulso característico de batimento cardíaco */
     @keyframes heartbeatPulse {
       0% {
         transform: scale(1);
@@ -989,6 +988,13 @@
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 22px;
+    }
+
+    /* CORREÇÃO DO CONTRASTE DOS BOTÕES DE CONTATO */
+    .contact-card .contact-actions a.button-primary,
+    .contact-card .contact-actions a.button-primary:hover,
+    .contact-card .contact-actions a.button-primary:visited {
+      color: #ffffff !important;
     }
 
     /* FOOTER */
@@ -1437,7 +1443,7 @@
           <!-- Item 4 -->
           <div class="gallery-card" data-gallery-item>
             <div class="like-badge" role="button" aria-label="Curtir foto">
-              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3.5 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
               <span class="like-count"></span>
             </div>
             <img src="imagens/4.jpg" alt="Trabalho realizado no Studio Vilaine Alves" loading="lazy">
@@ -1621,10 +1627,10 @@
           <div class="contact-card">
             <h3>Fale com a equipe</h3>
             <p><strong>WhatsApp:</strong> <a href="https://wa.me/5564999047436" target="_blank" rel="noopener noreferrer">(64) 99904-7436</a></p>
-            <p><strong>Instagram:</strong> <a href="https://www.instagram.com/vilainealves/" target="_blank" rel="noopener noreferrer">@vilainealves</a></p>
+            <p><strong>Instagram:</strong> <a href="https://www.instagram.com/vilainealvesstudio2026/" target="_blank" rel="noopener noreferrer">@vilainealvesstudio2026</a></p>
             <div class="contact-actions">
               <a class="button button-primary" href="https://wa.me/5564999047436?text=Ol%C3%A1%2C%20vim%20pelo%20site%20do%20Studio%20Vilaine%20Alves." target="_blank" rel="noopener noreferrer">Chamar no WhatsApp</a>
-              <a class="button button-secondary" href="https://www.instagram.com/vilainealves/" target="_blank" rel="noopener noreferrer">Ver Instagram</a>
+              <a class="button button-secondary" href="https://www.instagram.com/vilainealvesstudio2026/" target="_blank" rel="noopener noreferrer">Ver Instagram</a>
             </div>
           </div>
         </div>
@@ -1682,26 +1688,62 @@
     });
 
     // =========================================================
-    // GALERIA: CONTROLE DE SELEÇÃO E ANIMAÇÃO DOS CORAÇÕES
+    // GALERIA: CURTIDAS PERSISTENTES COM LOCALSTORAGE
     // =========================================================
     const galleryCards = document.querySelectorAll("[data-gallery-item]");
 
     galleryCards.forEach((card) => {
       const likeBadge = card.querySelector(".like-badge");
       const countEl = card.querySelector(".like-count");
+      const img = card.querySelector("img");
       
-      let baseLikes = Math.floor(Math.random() * (211 - 126 + 1)) + 126;
-      let isLiked = false;
-      countEl.textContent = baseLikes;
+      // Chave baseada na imagem do card
+      const storageKey = `vilaine_likes_${img ? img.getAttribute("src") : "photo"}`;
+
+      // Tenta ler estado salvo
+      let stored = null;
+      try {
+        const raw = localStorage.getItem(storageKey);
+        if (raw) stored = JSON.parse(raw);
+      } catch (err) {
+        stored = null;
+      }
+
+      // Se não existir ou for inválido, sorteia UMA ÚNICA VEZ e salva
+      if (!stored || typeof stored.count !== "number" || typeof stored.isLiked !== "boolean") {
+        stored = {
+          count: Math.floor(Math.random() * (211 - 126 + 1)) + 126,
+          isLiked: false
+        };
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(stored));
+        } catch (e) {}
+      }
+
+      const updateUI = () => {
+        countEl.textContent = stored.count;
+        likeBadge.classList.toggle("is-liked", stored.isLiked);
+        likeBadge.setAttribute("aria-pressed", String(stored.isLiked));
+        likeBadge.setAttribute("aria-label", stored.isLiked ? "Descurtir foto" : "Curtir foto");
+      };
+
+      // Inicializa na tela
+      updateUI();
 
       // Clique direto no coração
       likeBadge.addEventListener("click", (e) => {
         e.stopPropagation();
-        isLiked = !isLiked;
-        likeBadge.classList.toggle("is-liked", isLiked);
-        countEl.textContent = isLiked ? (baseLikes + 1) : baseLikes;
 
-        if (isLiked) {
+        stored.isLiked = !stored.isLiked;
+        stored.count += stored.isLiked ? 1 : -1;
+
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(stored));
+        } catch (err) {}
+
+        updateUI();
+
+        if (stored.isLiked) {
           galleryCards.forEach(c => {
             if (c !== card) c.classList.remove("is-selected");
           });
@@ -1711,14 +1753,13 @@
         }
       });
 
-      // Clique no card da foto
+      // Clique no card da foto para selecionar/destacar
       card.addEventListener("click", (e) => {
         if (e.target.closest(".cta-result-btn") || e.target.closest(".like-badge")) {
           return;
         }
 
         const isCurrentlySelected = card.classList.contains("is-selected");
-
         galleryCards.forEach(c => c.classList.remove("is-selected"));
 
         if (!isCurrentlySelected) {
@@ -1727,7 +1768,7 @@
       });
     });
 
-    // Desseleciona ao clicar fora
+    // Desseleciona cards ao clicar fora
     document.addEventListener("click", (e) => {
       if (!e.target.closest("[data-gallery-item]")) {
         galleryCards.forEach(c => c.classList.remove("is-selected"));
