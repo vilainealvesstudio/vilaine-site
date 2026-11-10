@@ -124,14 +124,14 @@
       animation: enterV 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.2s;
     }
 
-    /* Letra A desliza da direita para o centro */
+    /* Letra A desliza da direita para o centro e apenas toca o V */
     .anim-a {
       transform: translateX(40px);
       opacity: 0;
       animation: enterA 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.55s;
     }
 
-    /* Círculo é desenhado ao redor das letras */
+    /* Círculo que se desenha ao redor */
     .anim-circle {
       stroke-dasharray: 440;
       stroke-dashoffset: 440;
@@ -142,7 +142,7 @@
     @keyframes enterV {
       0% {
         opacity: 0;
-        transform: translateX(-55px) scale(0.9);
+        transform: translateX(-50px) scale(0.92);
       }
       100% {
         opacity: 1;
@@ -153,7 +153,7 @@
     @keyframes enterA {
       0% {
         opacity: 0;
-        transform: translateX(55px) scale(0.9);
+        transform: translateX(50px) scale(0.92);
       }
       100% {
         opacity: 1;
@@ -467,7 +467,6 @@
       position: relative;
       width: min(100%, 340px);
       aspect-ratio: 3.6 / 4.7;
-      /* Rotação em -10° apontando para o conteúdo principal */
       transform: rotate(-10deg);
       border-radius: 20px;
       box-shadow: -15px 25px 45px rgba(67, 43, 39, .18);
@@ -476,7 +475,6 @@
     }
 
     .hero-photo-wrapper:hover {
-      /* Leve desinclinada suave no hover */
       transform: rotate(-4deg) scale(1.03);
       box-shadow: -20px 30px 60px rgba(67, 43, 39, .25);
     }
@@ -503,7 +501,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      transform: rotate(10deg); /* Compensa a rotação para ficar perfeitamente alinhado */
+      transform: rotate(10deg);
     }
 
     .hero-badge-icon {
@@ -1070,19 +1068,21 @@
 
           <!-- Letra V animada (avança da esquerda para o centro) -->
           <g class="anim-v">
-            <path d="M42 48 H58 L69 94 L80 48 H94 L75 112 H64 Z" fill="url(#goldGrad)"/>
+            <path d="M38 48 H53 L62 94 L71 48 H84 L68 112 H58 Z" fill="url(#goldGrad)"/>
             <!-- Serifa clássica superior do V -->
-            <path d="M40 48 H58 V52 H40 Z" fill="url(#goldGrad)"/>
+            <path d="M36 48 H53 V51.5 H36 Z" fill="url(#goldGrad)"/>
           </g>
 
-          <!-- Letra A animada com traço orgânico (avança da direita para fundir com V) -->
+          <!-- Letra A animada (avança da direita e apenas encosta no V, sem sobrepor) -->
           <g class="anim-a">
-            <!-- Perna reta e barra do A -->
-            <path d="M84 54 L98 112 H86 L81 92 H67 L70 82 H80 L73 54 Z" fill="url(#goldGrad)"/>
-            <!-- Traço curvo ascendente característico da logo -->
-            <path d="M72 108 C86 92 104 70 114 34 C115 30 113 32 110 37 C100 66 84 88 68 104 Z" fill="url(#goldGrad)"/>
+            <!-- Perna esquerda do A: desce do topo e apenas toca suavemente a borda do V em (71,82) -->
+            <path d="M91 53 L73 112 H82 L86 98 H102 L95 72 L91 53 Z" fill="url(#goldGrad)"/>
+            <!-- Barra horizontal do A tocando a lateral do V sem cobri-la -->
+            <path d="M72 82 H98 V85.5 H72 Z" fill="url(#goldGrad)"/>
+            <!-- Haste curva ascendente característica do monograma VA -->
+            <path d="M84 110 C96 94 112 70 121 34 C122 30 120 32 117 37 C108 66 94 88 80 106 Z" fill="url(#goldGrad)"/>
             <!-- Floreio suave do A -->
-            <path d="M68 62 C73 58 78 57 84 57 C80 61 76 65 71 70 Z" fill="url(#goldGrad)"/>
+            <path d="M80 62 C85 58 90 57 96 57 C92 61 88 65 83 70 Z" fill="url(#goldGrad)"/>
           </g>
         </svg>
       </div>
@@ -1404,8 +1404,8 @@
     window.addEventListener("DOMContentLoaded", () => {
       const titleEl = document.getElementById("splash-title");
       const fullText = "VILAINE ALVES STUDIO";
-      const baseDelay = 1.6; // Inicia logo após o traçado do círculo
-      const step = 0.045; // Intervalo entre cada letra
+      const baseDelay = 1.6;
+      const step = 0.045;
 
       titleEl.innerHTML = "";
       let letterIndex = 0;
@@ -1434,7 +1434,7 @@
           setTimeout(() => {
             splash.remove();
           }, 850);
-        }, 3400); // Tempo total perfeito para ver a fusão, o círculo e o texto completo
+        }, 3400);
       }
     });
 
