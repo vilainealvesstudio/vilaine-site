@@ -74,7 +74,7 @@
     }
 
     /* =========================================================
-       ABERTURA DE IMPACTO: MONOGRAMA UNIFICADO VA CONTÍNUO
+       ABERTURA: V DA ESQUERDA, A DA DIREITA E CÍRCULO DOURADO
        ========================================================= */
     #splash-screen {
       position: fixed;
@@ -116,29 +116,47 @@
       overflow: visible;
     }
 
-    /* Animação de entrada do traçado unificado VA */
-    .anim-va-symbol {
+    /* O V começa à esquerda e desloca-se até o centro */
+    .anim-v {
       opacity: 0;
-      transform: scale(0.92);
-      transform-origin: center;
-      animation: enterSymbol 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
+      transform: translate(-44px, 0);
+      animation: enterV 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.25s;
     }
 
+    /* O A começa à direita e move-se até a junção com o V */
+    .anim-a {
+      opacity: 0;
+      transform: translate(44px, 0);
+      animation: enterA 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.8s;
+    }
+
+    /* O Círculo dourado desenha-se logo após a união das letras */
     .anim-circle {
       stroke-dasharray: 440;
       stroke-dashoffset: 440;
       transform-origin: center;
-      animation: drawCircle 1.1s cubic-bezier(0.45, 0, 0.2, 1) forwards 1.15s;
+      animation: drawCircle 1.1s cubic-bezier(0.45, 0, 0.2, 1) forwards 1.65s;
     }
 
-    @keyframes enterSymbol {
+    @keyframes enterV {
       0% {
         opacity: 0;
-        transform: scale(0.85) translateY(12px);
+        transform: translate(-44px, 0);
       }
       100% {
         opacity: 1;
-        transform: scale(1) translateY(0);
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes enterA {
+      0% {
+        opacity: 0;
+        transform: translate(44px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
       }
     }
 
@@ -192,7 +210,7 @@
       text-transform: uppercase;
       color: var(--muted);
       opacity: 0;
-      animation: fadeIn 0.8s ease forwards 2.3s;
+      animation: fadeIn 0.8s ease forwards 2.7s;
     }
 
     @keyframes fadeIn {
@@ -447,7 +465,7 @@
       font-size: .88rem;
     }
 
-    /* FOTO INICIAL ROTACIONADA EM -10° */
+    /* FOTO INICIAL ROTACIONADA (-10°) */
     .hero-visual {
       position: relative;
       display: flex;
@@ -711,7 +729,7 @@
     }
 
     /* =========================================================
-       GALERIA: CONTADOR DE LIKES, HOVER E FLUXO SELEÇÃO MOBILE
+       GALERIA: FOTO SELECIONADA E PULSAÇÃO DE BATIMENTO CARDÍACO
        ========================================================= */
     .gallery-grid {
       display: grid;
@@ -787,13 +805,13 @@
       align-items: center;
       gap: 5px;
       padding: 5px 9px;
-      background: rgba(255, 253, 251, 0.92);
-      border: 1px solid rgba(232, 220, 212, 0.8);
+      background: rgba(255, 253, 251, 0.94);
+      border: 1px solid rgba(232, 220, 212, 0.85);
       border-radius: 999px;
       box-shadow: 0 4px 14px rgba(67, 43, 39, 0.16);
       backdrop-filter: blur(6px);
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     }
 
     .like-badge:hover {
@@ -807,20 +825,52 @@
       fill: none;
       stroke: var(--muted);
       stroke-width: 2;
-      transition: stroke 0.25s ease, fill 0.25s ease, transform 0.25s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+      display: inline-block;
+      transform-origin: center;
+      transition: stroke 0.25s ease, fill 0.25s ease;
     }
 
+    /* Curtido manualmente: preenchimento avermelhado */
     .like-badge.is-liked .heart-icon {
       fill: #d1495b;
       stroke: #d1495b;
-      animation: heartPulse 0.45s cubic-bezier(0.17, 0.89, 0.32, 1.49);
     }
 
-    @keyframes heartPulse {
-      0% { transform: scale(1); }
-      45% { transform: scale(1.4); }
-      75% { transform: scale(0.9); }
-      100% { transform: scale(1); }
+    /* FOTO SELECIONADA: PULSAÇÃO CONTÍNUA EM RITMO DE BATIMENTO CARDÍACO */
+    .gallery-card.is-selected .heart-icon {
+      animation: heartbeatPulse 1.2s ease-in-out infinite !important;
+      stroke: #d1495b;
+      fill: rgba(209, 73, 91, 0.3);
+    }
+
+    .gallery-card.is-selected .like-badge.is-liked .heart-icon {
+      fill: #d1495b;
+    }
+
+    .gallery-card.is-selected .like-badge {
+      border-color: rgba(209, 73, 91, 0.45);
+      box-shadow: 0 4px 18px rgba(209, 73, 91, 0.25);
+    }
+
+    @keyframes heartbeatPulse {
+      0% {
+        transform: scale(1);
+      }
+      14% {
+        transform: scale(1.38);
+      }
+      28% {
+        transform: scale(1);
+      }
+      42% {
+        transform: scale(1.24);
+      }
+      70% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
 
     .like-count {
@@ -832,7 +882,8 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .like-badge.is-liked .like-count {
+    .like-badge.is-liked .like-count,
+    .gallery-card.is-selected .like-count {
       color: #962838;
     }
 
@@ -872,7 +923,7 @@
       background: #7a4646;
     }
 
-    /* No desktop, mostra o botão no hover */
+    /* No desktop: mostra o botão no hover */
     @media (hover: hover) {
       .gallery-card:hover .photo-overlay {
         opacity: 1;
@@ -883,7 +934,7 @@
       }
     }
 
-    /* No Mobile / Touch: o botão só surge quando o card estiver com a classe .is-selected */
+    /* No celular/toque: o botão só surge quando o card estiver com a classe .is-selected */
     .gallery-card.is-selected .photo-overlay {
       opacity: 1;
       pointer-events: auto;
@@ -991,7 +1042,6 @@
         transform: none !important;
         margin-top: 12px;
       }
-      /* Desativa zoom forçado no hover em celular, dependendo da seleção ativa */
       .gallery-card:hover {
         transform: none;
         box-shadow: 0 8px 25px rgba(67, 43, 39, .08);
@@ -1000,7 +1050,6 @@
       .gallery-card:hover::before {
         opacity: 0;
       }
-      /* Apenas o card selecionado recebe a escala no celular */
       .gallery-card.is-selected {
         transform: translateY(-6px) scale(1.1) !important;
         box-shadow: 0 20px 45px rgba(67, 43, 39, .25) !important;
@@ -1134,7 +1183,7 @@
 </head>
 
 <body>
-  <!-- TELA DE ABERTURA COM MONOGRAMA UNIFICADO VA -->
+  <!-- TELA DE ABERTURA COM MONOGRAMA ANIMADO (V da esquerda, A da direita) -->
   <aside id="splash-screen" aria-label="Vilaine Alves Studio de Beleza">
     <div class="splash-container">
       <div class="monogram-svg-wrap">
@@ -1151,26 +1200,20 @@
             </linearGradient>
           </defs>
 
-          <!-- Círculo que se desenha ao redor -->
+          <!-- Círculo que se desenha ao redor após a junção -->
           <circle class="anim-circle" cx="80" cy="80" r="70" stroke="url(#ringGrad)" stroke-width="2.2" />
 
-          <!-- Símbolo VA Unificado Contínuo -->
-          <g class="anim-va-symbol">
-            <!-- Haste esquerda clássica do V com serifa -->
+          <!-- V: entra da esquerda até o centro -->
+          <g class="anim-v">
             <path d="M41 52 H57 V55 H49.5 L61 97 H68.5 L57 55 H41 Z" fill="url(#goldGrad)"/>
             <path d="M39 52 H57 V55 H39 Z" fill="url(#goldGrad)"/>
-            
-            <!-- Haste direita do V: prolongada ao dobro do comprimento com curva para a direita -->
             <path d="M64 97 L82 52 C89 34 100 22 119 14 C121 13 120 16 117 18 C102 26 91 40 85 58 L72 97 Z" fill="url(#goldGrad)"/>
-            
-            <!-- Letra A unida: compartilha a haste curva do V, eliminando a perna esquerda redundante -->
-            <!-- Perna direita do A descendo a partir do topo do V -->
+          </g>
+
+          <!-- A: entra da direita até encontrar o V na junção exata -->
+          <g class="anim-a">
             <path d="M82 52 L99 108 H88 L84 94 H72 L74 88 H86 L80 66 Z" fill="url(#goldGrad)"/>
-            
-            <!-- Barra horizontal contínua conectando as duas letras -->
             <path d="M68 83 H90 V86.5 H68 Z" fill="url(#goldGrad)"/>
-            
-            <!-- Floreio estilizado no ápice do monograma -->
             <path d="M78 57 C83 53 88 52 94 52 C90 56 86 60 81 65 Z" fill="url(#goldGrad)"/>
           </g>
         </svg>
@@ -1610,11 +1653,11 @@
   </a>
 
   <script>
-    // Gerenciador de Animação de Abertura
+    // Gerenciador da Animação de Abertura (Letras do título e fade out)
     window.addEventListener("DOMContentLoaded", () => {
       const titleEl = document.getElementById("splash-title");
       const fullText = "VILAINE ALVES STUDIO";
-      const baseDelay = 1.35;
+      const baseDelay = 1.85;
       const step = 0.042;
 
       titleEl.innerHTML = "";
@@ -1643,12 +1686,12 @@
           setTimeout(() => {
             splash.remove();
           }, 850);
-        }, 3200);
+        }, 3800);
       }
     });
 
     // =========================================================
-    // SISTEMA DE CURTIDAS (126 a 211) E SELEÇÃO DE FOTO NO CELULAR
+    // GALERIA: CONTADOR DE LIKES (126-211) E SELEÇÃO DE FOTO
     // =========================================================
     const galleryCards = document.querySelectorAll("[data-gallery-item]");
 
@@ -1656,12 +1699,12 @@
       const likeBadge = card.querySelector(".like-badge");
       const countEl = card.querySelector(".like-count");
       
-      // Gera valor aleatório inicial entre 126 e 211
+      // Gera contagem inicial aleatória entre 126 e 211
       let baseLikes = Math.floor(Math.random() * (211 - 126 + 1)) + 126;
       let isLiked = false;
       countEl.textContent = baseLikes;
 
-      // Evento do botão de like (não aciona a seleção do card nem agendamento)
+      // Clique no botão de curtir
       likeBadge.addEventListener("click", (e) => {
         e.stopPropagation();
         isLiked = !isLiked;
@@ -1669,26 +1712,26 @@
         countEl.textContent = isLiked ? (baseLikes + 1) : baseLikes;
       });
 
-      // No mobile / toque: o primeiro toque seleciona a foto sem abrir WhatsApp
+      // Clique/toque na foto para selecionar e ativar o batimento cardíaco
       card.addEventListener("click", (e) => {
-        // Se tocou direto no link ou botão de WhatsApp, deixa navegar normalmente
+        // Se tocou no botão de agendamento ou no coração, deixa executar normalmente
         if (e.target.closest(".cta-result-btn") || e.target.closest(".like-badge")) {
           return;
         }
 
-        // Se o card já está selecionado, pode desselecionar
         const isAlreadySelected = card.classList.contains("is-selected");
 
-        // Remove seleção de qualquer outro card
+        // Remove seleção de outras fotos
         galleryCards.forEach(c => c.classList.remove("is-selected"));
 
+        // Alterna seleção da foto atual
         if (!isAlreadySelected) {
           card.classList.add("is-selected");
         }
       });
     });
 
-    // Fecha a seleção ao tocar fora de qualquer foto da galeria
+    // Desseleciona ao clicar/tocar fora da galeria (para o batimento cardíaco)
     document.addEventListener("click", (e) => {
       if (!e.target.closest("[data-gallery-item]")) {
         galleryCards.forEach(c => c.classList.remove("is-selected"));
